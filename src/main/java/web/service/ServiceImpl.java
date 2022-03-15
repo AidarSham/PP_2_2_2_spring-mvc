@@ -10,9 +10,7 @@ import java.util.stream.Collectors;
 public class ServiceImpl implements Service {
     public static List<Car> listCar;
 
-    @Override
-    public List<Car> buildCar() {
-
+    static {
         listCar = new ArrayList<>();
 
         listCar.add(new Car(1, "Ford", "White"));
@@ -21,13 +19,11 @@ public class ServiceImpl implements Service {
         listCar.add(new Car(4, "Chevrolet", "Yellow"));
         listCar.add(new Car(5, "GM", "Black"));
 
-        return listCar;
     }
-
-    public List<Car> selectCar(List<Car> catalog, int count) {
-        buildCar();
-        if (count == 0 || count > 5) return catalog;
-        return catalog.stream().limit(count).collect(Collectors.toList());
+    @Override
+    public List<Car> selectCar(int count) {
+        if (count == 0 || count > 5) return listCar;
+        return listCar.stream().limit(count).collect(Collectors.toList());
     }
 }
 

@@ -1,24 +1,24 @@
 package web.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import web.service.ServiceImpl;
-
-import static web.service.ServiceImpl.listCar;
+import web.service.Service;
 
 @Controller
 public class CarController {
-    private final ServiceImpl service;
 
-    public CarController(ServiceImpl service) {
+    private final Service service;
+
+    @Autowired
+    public CarController(Service service) {
         this.service = service;
     }
-
     @GetMapping(value = "/cars")
     public String printCar(@RequestParam(value = "count", defaultValue = "5") int count, Model model) {
-        model.addAttribute("cars", service.selectCar(listCar, count));
+        model.addAttribute("cars",service.selectCar(count));
         return "cars";
     }
 }
